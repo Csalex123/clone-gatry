@@ -1,6 +1,8 @@
 import React from 'react';
 import PromotionCard from 'components/Promotion/Card';
 
+import './Search.scss';
+
 function PagesPromotionSearch(props) {
 
     const promotion = {
@@ -18,7 +20,7 @@ function PagesPromotionSearch(props) {
     }
 
     return (
-        <div>
+        <div className="Search">
             <PromotionCard promotion={promotion} />
         </div>
     );
