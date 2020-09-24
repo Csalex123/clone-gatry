@@ -1,13 +1,15 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import PromotionForm from 'components/Promotion/Form';
+import Container from 'shared/Container';
 
 function PagePromotionForm(props) {
     const { id } = useParams();
 
     return (
-        <div>
-            {id && id}
-        </div>
+        <Container>
+            <PromotionForm />
+        </Container>
     );
 }
 
