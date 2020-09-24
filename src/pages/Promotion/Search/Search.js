@@ -1,35 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import PromotionCard from 'components/Promotion/Card';
-import api from 'services/api';
+import React from 'react';
+import PromotionSearch from 'components/Promotion/Search';
+import Container from 'shared/Container';
 
-import './Search.scss';
-
-function PagesPromotionSearch(props) {
-    const [promotions, setPromotions] = useState([]);
-
-    useEffect(() => {
-
-        const getAllPromotions = async () => {
-            try {
-                const response = await api.get('/promotions?_embed=comments');
-                setPromotions(response.data);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        getAllPromotions();
-
-    }, []);
+function PagesPromotionSearch() {
 
     return (
-        <div className="Search">
-            {
-                promotions.map(promotion => (
-                    <PromotionCard key={promotion.id} promotion={promotion} />
-                ))
-            }
-        </div>
+        <Container>
+            <PromotionSearch />
+        </Container>
     );
 }
 
