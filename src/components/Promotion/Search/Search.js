@@ -16,7 +16,7 @@ function PromotionSearch() {
         }
         const getAllPromotions = async () => {
             try {
-                const response = await api.get('/promotions?_embed=comments', { params });
+                const response = await api.get('/promotions?_embed=comments&_order=desc&_sort=id', { params });
                 setPromotions(response.data);
             } catch (error) {
                 console.error(error);
