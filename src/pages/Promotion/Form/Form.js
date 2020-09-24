@@ -8,7 +8,7 @@ function PagePromotionForm(props) {
 
     return (
         <Container>
-            <PromotionForm />
+            <PromotionForm id={ id ? Number.parseInt(id, 10) : null } />
         </Container>
     );
 }
