@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import api from 'services/api';
+import useApi from 'utils/useApi';
 
 import './Form.scss';
 
@@ -14,24 +14,33 @@ function PromotionForm({ id }) {
     }
 
     const [form, setForm] = useState(id ? null : initialForm);
+    const history = useHistory();
 
-    useEffect(() => {
+    const [load] = useApi({
+        url: `/promotions/${id}`,
+        method: 'get',
+        onCompleted: (response) => {
+            setForm(response.data)
+        }
+    });
 
-        const getPromotionFilted = async () => {
-            if (id) {
-                try {
-                    const response = await api.get(`/promotions/${id}`);
-                    setForm(response.data);
-                } catch (error) {
-                    console.error(error);
-                }
+    const [save, saveInfo] = useApi({
+        url: id ? `/promotions/${id}` : '/promotions',
+        method: id ? 'put' : 'post',
+        data: form,
+        onCompleted: (response) => {
+            if(!response.error){
+                history.push('/');
             }
         }
+    });
 
-        getPromotionFilted();
-    }, []);
+    useEffect(() => {
+        if (id) {
+            load();
+        }
+    }, [id]);
 
-    const history = useHistory();
 
     const onChange = (event) => {
         const { name, value } = event.target;
@@ -44,18 +53,7 @@ function PromotionForm({ id }) {
 
     const onSubmit = async (event) => {
         event.preventDefault();
-
-        const method = id ? 'put' : 'post';
-        const url = id
-            ? `/promotions/${id}`
-            : '/promotions';
-
-        try {
-            await api[method](url, form);
-            history.push('/')
-        } catch (error) {
-            console.error(error);
-        }
+        save();
     }
 
     return (
@@ -66,8 +64,9 @@ function PromotionForm({ id }) {
             {!form
                 ? (<div>Carregando...</div>)
                 : (
-
+                   
                     <form onSubmit={onSubmit}>
+                        {saveInfo.loading && <div> <h2 style={{ textAlign: 'center' }}>Salvando as informações.... </h2></div>}
                         <div className="promotion-form__group">
                             <label htmlFor="title">Título</label>
                             <input
