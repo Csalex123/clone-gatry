@@ -39,6 +39,7 @@ function PromotionForm({ id }) {
         if (id) {
             load();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
 
