@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PromotionCard from '../Card';
-
+import SharedModal from 'shared/Modal/';
 import './List.scss';
 
 function PromotionList({ loading, promotions, error }) {
+    const [promotionId, setPromotionId] = useState(null);
+
     if (loading || promotions === null) {
         return (
             <div className="promotion-loading">
@@ -20,13 +22,24 @@ function PromotionList({ loading, promotions, error }) {
     }
 
     return (
-        <div className="promotion-list">
-            {
-                promotions.map(promotion => (
-                    <PromotionCard key={promotion.id} promotion={promotion} />
-                ))
-            }
-        </div>
+
+        <>
+            <div className="promotion-list">
+                {
+                    promotions.map(promotion => (
+                        <PromotionCard
+                            key={promotion.id}
+                            promotion={promotion}
+                            onClickComments={() => setPromotionId(promotion.id)}
+                             />
+                    ))
+                }
+            </div>
+
+            <SharedModal isOpen={ Boolean(promotionId) } onClickClose={() => setPromotionId(null)}>
+                <h1>Comentáros</h1>
+            </SharedModal>
+        </>
     )
 }
 

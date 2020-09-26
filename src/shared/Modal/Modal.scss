@@ -1,0 +1,22 @@
+.ui-modal__overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba($color: #000, $alpha: .5);
+
+    .ui-modal{
+        background-color: #FFF;
+        border-radius: 4px;
+        max-width: 920px;
+        margin: 80px auto;
+        padding: 15px;
+
+        .ui-modal__close-button{
+            float: right;
+            background: unset;
+            border: unset;
+        }
+    }
+}
